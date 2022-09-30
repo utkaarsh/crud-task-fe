@@ -1,0 +1,65 @@
+<div class="container  mt-4">
+    <h2 class="text-white bg-danger p-4 fw-bold text-center">Task Manager Applicationy</h2>
+    <div class="row">
+        <div class="col-4">
+
+            <div class="row">
+                <div class="col-6">
+                    <h3 class="fw-bold text-white float-start">Task List</h3>
+
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-success float-end">New List</button>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                <ul class="list-group">
+                    <li 
+                    *ngFor="let item of tasklists"
+                    class="list-group-item d-flex justify-content-between align-items-center">
+                        {{item.title}}
+                        <span class="badge bg-danger rounded-pill">X</span>
+                    </li>
+                    
+                </ul>
+            </div>
+            </div>
+        </div>
+
+
+        <div class="col-8">
+            <div class="row">
+                <div class="col-6">
+                    <h3 class="fw-bold float-start text-white">Linked Task</h3>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-success float-end">New Task</button>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                <ul class="list-group">
+                    <li 
+                    *ngFor="let item of tasks"
+                    class="list-group-item d-flex justify-content-between align-items-center">
+                        {{item.title}}
+                        <span class="badge bg-danger rounded-pill">X</span>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
