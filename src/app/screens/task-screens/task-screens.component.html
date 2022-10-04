@@ -9,7 +9,7 @@
 
                 </div>
                 <div class="col-6">
-                    <button type="button" class="btn btn-success float-end">New List</button>
+                    <button routerLink="/new-task-list" type="button" class="btn btn-success float-end">New List</button>
                 </div>
             </div>
 
@@ -18,10 +18,13 @@
                 <div class="col-12">
                 <ul class="list-group">
                     <li 
+                    [routerLink]="['/task-list',item._id,'tasks']"
+                    routerLinkActive="active"
+
                        *ngFor="let item of tasklists"
                     class="list-group-item d-flex justify-content-between align-items-center">
                         {{item.title}}
-                        <span class="badge bg-danger rounded-pill">X</span>
+                        <span (click)="deleteTaskList(item)" class="badge bg-danger rounded-pill">X</span>
                     </li>
                     
                 </ul>
@@ -36,7 +39,7 @@
                     <h3 class="fw-bold float-start text-white">Linked Task</h3>
                 </div>
                 <div class="col-6">
-                    <button type="button" class="btn btn-success float-end">New Task</button>
+                    <button type="button" class="btn btn-success float-end" (click)="addNewTask()" >New Task</button>
 
                 </div>
             </div>
@@ -46,10 +49,11 @@
                 <div class="col-12">
                 <ul class="list-group">
                     <li 
-                    *ngFor="let item of tasks"  style="cursor: pointer;" (click)="taskClicked(task)"
+                    [class.mark-completed]="task.completed==true"
+                    *ngFor="let task of tasks "  style="cursor: pointer;" (click)="taskClicked(task)"
                     class="list-group-item d-flex justify-content-between align-items-center">
-                        {{item.title}}
-                        <span class="badge bg-danger rounded-pill">X</span>
+                        {{task.title}}
+                        <span (click)="deleteTask(task)" class="badge bg-danger rounded-pill">X</span>
                     </li>
                 </ul>
                 </div>

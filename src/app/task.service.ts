@@ -16,9 +16,9 @@ export class TaskService {
   }
    
   //create a tasklists bucket 
-   createTaskList(title:string){
+   createTaskList(title:string): Observable<taskListModel>{
     let data={'title':title};
-    this.apiConfigService.post('tasklists',data)
+    return this.apiConfigService.post('tasklists',data)
    }
   
 //To fetch all task inside a tasklist screen model
@@ -27,26 +27,25 @@ getAllTasksForTaskLists(taskListId:string):Observable<taskModel[]>{
 }
 
 //Create a task inside a particular tasklist
-createTaskForTaskList(taskListId:string,title:string){
-let data={'title':title};
-return this.apiConfigService.post(`tasklists/${taskListId}/tasks`,data)
+createTaskForTaskList(taskListId:string,title:string):Observable<taskModel>{
+return this.apiConfigService.postTask(`tasklists/${taskListId}/tasks`,{title})
 
 }
 
 //Delete a tasklist
-deleteTaskList(taskListId:string){
-  return this.apiConfigService.delete(`tasks/${taskListId}`)
+deleteTaskList(taskListId:string):Observable<taskListModel>{
+  return this.apiConfigService.deleteTasklist(`tasklists/${taskListId}`)
 }
 
 
 //Delete a task inside a particular tasklist
-deleteTaskInsideATaskList(taskListId:string,taskId:string){
-  return this.apiConfigService.delete(`tasks/${taskListId}/tasks/${taskId}`)
+deleteTaskInsideATaskList(taskListId:string,taskId:string):Observable<taskModel>{
+  return this.apiConfigService.delete(`tasklists/${taskListId}/tasks/${taskId}`)
 }
 
 //Update status of a task
-updateTask(taskListId:string,taskObject:taskModel){
+updateTask(taskListId:string,taskObject:taskModel):Observable<taskModel>{
   let updateData={'completed':!taskObject.completed};//toggle the database value
-  return this.apiConfigService.patch(`tasklists/${taskListId}/`,updateData)
+  return this.apiConfigService.patch(`tasklists/${taskListId}/tasks/${taskObject._id}`,updateData)
 }
 }

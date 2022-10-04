@@ -1,0 +1,22 @@
+<div class="container text-center mt-6">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label text-white text-xl">ADD NEW TASK</label>
+                <input #taskInput type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Title">
+              </div>
+             
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+            <div>
+                <button type="button" class="btn btn-danger m-2" routerLink="../" > Cancel </button>
+
+                <button type="button" class="btn btn-primary ml-4" (click)="addNewTask(taskInput.value)" > Add Task  </button>
+
+            </div>
+        </div>
+    </div>
+</div>

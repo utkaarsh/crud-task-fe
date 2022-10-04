@@ -13,9 +13,7 @@ export class TaskScreensComponent implements OnInit {
 
   tasklists: taskListModel[]=[];
   tasks: taskModel[]=[];
-  task:taskModel[]=[];
-  tasklistID:string=''
-
+  taskListId:string='';
 
   constructor(
     private taskService:TaskService,
@@ -35,8 +33,8 @@ export class TaskScreensComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       (params:Params)=>{
         console.log('Params data =>', params['tasklistID']);
-        const taskListId= params['taskListID']; 
-        console.log('tasklistId =>', taskListId);
+        this.taskListId= params['tasklistID']; 
+        console.log('tasklistId =>', this.taskListId);
         console.log("Params is an",typeof(params),"type of variable",params);
         if(params['tasklistID']){
           this.taskService.getAllTasksForTaskLists(params['tasklistID']).subscribe(
@@ -47,9 +45,38 @@ export class TaskScreensComponent implements OnInit {
     )
   }
 
-  taskClicked(task:taskModel[]){
-    console.log("Touched the task",task);
-    //  this.taskService.updateTask(params['taskListID'],task)
-    
+  taskClicked(task:taskModel){
+    console.log("Task Object",task);
+     this.taskService.updateTask(this.taskListId,task).subscribe(
+      ()=>task.completed=!task.completed
+    );
+   }
+  
+   deleteTask(task:taskModel){
+    console.log("Task Deleted");
+    this.taskService.deleteTaskInsideATaskList(this.taskListId,task._id)
+    .subscribe(
+      (taskDeleted:taskModel)=>
+      this.tasks=this.tasks.filter(t=>t._id != taskDeleted._id) //remove the deleted task from the task
+    )
+   }
+
+   deleteTaskList(taskListClicked:taskListModel){
+    console.log("Task List Deleted");
+    this.taskService.deleteTaskList(taskListClicked._id)
+    .subscribe(
+      ()=>{
+        this.tasklists=this.tasklists.filter(tL=>tL._id != taskListClicked._id)
+      }
+    )
+   }
+
+   addNewTask(){
+    if(this.taskListId){
+      //route the user to add task screen for the selected tasklist
+      this.router.navigate(['./new-task'],{relativeTo:this.activatedRoute})
+   }else{
+    alert('Please select a tasklist!')
+   }
   }
 }
